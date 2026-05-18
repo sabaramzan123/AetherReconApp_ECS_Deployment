@@ -69,7 +69,7 @@ jobs:
             echo "tag=${SHORT_SHA}" >> $GITHUB_OUTPUT
           fi
 
-      # 🔥 FIXED: Inline backend configurations passed directly as arguments to avoid whitespace initialization bugs
+      # 🔥 FIXED: Passed as inline parameters to completely bypass cache and whitespace errors
       - name: "Execute Initialized System Handshake"
         run: |
           terraform -chdir=infra/terraform init \
