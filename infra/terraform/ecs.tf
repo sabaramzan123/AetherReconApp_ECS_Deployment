@@ -51,8 +51,8 @@ resource "aws_ecs_service" "service" {
   enable_execute_command = true
 
   network_configuration {
-    subnets         = aws_subnet.private[*].id
-    security_groups = [aws_security_group.service[each.key].id]
+    subnets          = aws_subnet.private[*].id
+    security_groups  = [aws_security_group.service[each.key].id]
     assign_public_ip = false
   }
 
