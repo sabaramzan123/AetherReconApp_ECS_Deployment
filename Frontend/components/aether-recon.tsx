@@ -130,9 +130,12 @@ export default function AetherRecon() {
     setTerminalOutput([`>> Deploying: ${opContext.toUpperCase()} reconnaissance module for ${target}...`]);
 
     try {
+      // 🔥 FIXED: Dynamically capture process environment variables with a clean fallback pattern to prevent localhost binding
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "/api";
+      
       const endpoint = pipeline
-        ? `http://localhost:8000/scan?target=${target}`
-        : `http://localhost:8000/scan/${tool?.toLowerCase()}?target=${target}`;
+        ? `${apiBaseUrl}/scan?target=${target}`
+        : `${apiBaseUrl}/scan/${tool?.toLowerCase()}?target=${target}`;
 
       const res = await fetch(endpoint);
       const data = await res.json();
