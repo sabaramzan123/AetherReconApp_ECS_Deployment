@@ -1,6 +1,8 @@
 name: "02 - Continuous Integration Pipeline"
 
 on:
+  push:
+    branches: [ "main" ]  # 🔥 FIXED: Ab direct push karne par bhi pipeline chalegi!
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
