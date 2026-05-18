@@ -30,12 +30,7 @@ resource "aws_ecs_task_definition" "service" {
       }
     }
 
-    # Custom dynamic block to inject elevated Linux network privileges for Nmap capabilities safely only within backend bounds
-    linuxParameters = each.key == "backend" ? {
-      capabilities = {
-        add = ["NET_RAW", "NET_ADMIN"]
-      }
-    } : null
+    # 🔥 FIXED: Removed the restricted linuxParameters block entirely to ensure strict AWS Fargate execution compliance
   }])
 
   tags = local.common_tags
