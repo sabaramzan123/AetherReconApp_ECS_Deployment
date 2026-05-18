@@ -1,5 +1,5 @@
 # --- Stage 1: Core Base Dependency Layer ---
-FROM node:18-alpine AS base
+FROM node:22-alpine AS base
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -12,7 +12,7 @@ ENV NEXT_PUBLIC_API_URL=http://placeholder/api
 RUN npm run build
 
 # --- Stage 3: Dynamic Production Runtime ---
-FROM node:18-alpine AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
