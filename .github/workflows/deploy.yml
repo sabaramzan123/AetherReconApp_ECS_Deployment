@@ -69,17 +69,13 @@ jobs:
             echo "tag=${SHORT_SHA}" >> $GITHUB_OUTPUT
           fi
 
-      # 🔥 FIXED: Removed use_lockfile constraint to bypass Terraform v1.14 initialization structural bug
-      - name: "Render Dynamic Backend Configuration HCL Descriptor"
-        run: |
-          cat <<EOF > infra/terraform/backend.hcl
-          bucket = "${{ vars.TF_STATE_BUCKET }}"
-          key    = "${{ vars.TF_STATE_KEY }}"
-          region = "${{ vars.AWS_REGION }}"
-          EOF
-
+      # 🔥 FIXED: Inline backend configurations passed directly as arguments to avoid whitespace initialization bugs
       - name: "Execute Initialized System Handshake"
-        run: terraform -chdir=infra/terraform init -backend-config=backend.hcl
+        run: |
+          terraform -chdir=infra/terraform init \
+            -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ vars.TF_STATE_KEY }}" \
+            -backend-config="region=${{ vars.AWS_REGION }}"
 
       - name: "Inspect Platform Capability Bootstrap Dependencies Status"
         id: checkpoint
