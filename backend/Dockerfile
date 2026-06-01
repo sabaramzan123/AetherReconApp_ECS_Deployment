@@ -35,9 +35,9 @@ RUN go install -v github.com/tomnomnom/assetfinder@latest && \
 # 4. Install Python Tools & Fixes (CloudEnum & Dirsearch Fixed Paths)
 RUN pip install --no-cache-dir --break-system-packages "setuptools<70.0.0" defusedxml
 
-# 🔥 FIXED CLOUDENUM: Dono potential paths (/opt/cloudenum aur /opt/cloud_enum) aur executable permissions ka rola khatam
+# 🔥 FIXED CLOUDENUM: Standard directory install to handle pyproject.toml without requirements.txt
 RUN git clone https://github.com/initstring/cloud_enum.git /opt/cloudenum && \
-    pip install --no-cache-dir --break-system-packages -r /opt/cloudenum/requirements.txt && \
+    pip install --no-cache-dir --break-system-packages /opt/cloudenum/ && \
     chmod +x /opt/cloudenum/cloud_enum.py && \
     ln -sf /opt/cloudenum/cloud_enum.py /usr/local/bin/cloud_enum && \
     ln -sf /opt/cloudenum/cloud_enum.py /usr/local/bin/cloudenum
